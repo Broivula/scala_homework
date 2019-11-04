@@ -1,9 +1,6 @@
 import java.io.File
 import java.util.Scanner
 
-import javax.print.attribute.standard.PrinterMoreInfoManufacturer
-
-import scala.collection.mutable.ArrayBuffer
 // Exercises 1 b
 
 // chapter 1)
@@ -178,4 +175,58 @@ class Car(val manufacturer: String, val modelName: String, val modelYear: Int, v
 // and secondly, I think It just makes the code more readable, to have all the fields there.
 
 
-// chapter 6) to be cont..
+// chapter 6)
+
+// 1 write an object Conversions...
+object Conversions{
+  def inchesToCentimeters(value: Double) : Double = {value*2.54}
+  def gallonsToLiters(value: Double) : Double = {value*3.785}
+  def milesToKilometers(value: Double) : Double = {value*1.609}
+}
+Conversions.milesToKilometers(5)
+Conversions.inchesToCentimeters(5)
+Conversions.gallonsToLiters(5)
+
+// 2 the preceding problem wasn't very oo...
+abstract class UnitConversion(){def conversion(value: Double): Double}
+object InchesToCentimeters extends UnitConversion {
+  override def conversion(value: Double): Double = value*2.54
+}
+object GallonsToLiters extends UnitConversion{
+  override def conversion(value: Double): Double = value*3.785
+}
+object MilesToKilometers extends UnitConversion{
+  override def conversion(value: Double): Double = value*1.609
+}
+InchesToCentimeters.conversion(5)
+GallonsToLiters.conversion(5)
+MilesToKilometers.conversion(5)
+
+
+// chapter 7)
+
+// 4 why do you think the Scala language...
+// Most likely because in Scala a package can be separated in multiple files, having variables
+// and functions all over the place could get messy. This way the whole thing is more cleaner.
+
+//5 what is the meaning of private[com]...
+// private[com] makes it so that the method can only be called from within the com package.
+// if you don't want anyone outside the com to give raises, it's a good thing, I guess
+// ..not sure if that's what they were going after, but I can't think of anything else.
+
+
+// chapter 9)
+import scala.io.Source
+
+// 3 write a scala code snippet that..
+Source.fromFile("D:\\Koulujutut\\Scala\\tasks_23_10_2019\\src\\main\\scala\\textfile.txt").mkString.split(" ").filter(_.length > 12).foreach(println(_))
+
+
+// 4 write a scala program that reads a text file containing only floating point...
+val tokens =  Source.fromFile("D:\\Koulujutut\\Scala\\tasks_23_10_2019\\src\\main\\scala\\floatingpoints.txt").mkString.split("\\s+")
+var numbers = for(e <- tokens)yield e.toDouble
+println(numbers.sum)
+println(numbers.sum/numbers.length)
+println(numbers.min)
+println(numbers.max)
+
